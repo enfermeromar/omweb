@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Desmond Doss - Héroe de la Segunda Guerra Mundial, primer objetor de conciencia en recibir la Medalla de Honor por salvar a 75 soldados en Okinawa">
+    <meta name="keywords" content="Desmond Doss, Hacksaw Ridge, Medalla de Honor, Segunda Guerra Mundial, objetor de conciencia, Batalla de Okinawa">
+    <link rel="icon" href="imagenes/cruz.ico" type="image/x-icon">
+    <title>Desmond Doss - Héroe de la Segunda Guerra Mundial</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-dark: #121212;
+            --color-gray: #2d2d2d;
+            --color-light: #e0e0e0;
+            --color-accent: #8b0000;
+        }
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        .navbar, .footer {
+            background-color: var(--color-gray) !important;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Desmond_Doss_%28cropped%29.jpg/1200px-Desmond_Doss_%28cropped%29.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-quote {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin: 2rem 0;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px solid var(--color-accent);
+        }
+        .card {
+            background-color: var(--color-gray);
+            border: none;
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .btn-primary {
+            background-color: var(--color-accent);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #6b0000;
+            transform: translateY(-2px);
+        }
+        .section-title {
+            border-left: 5px solid var(--color-accent);
+            padding-left: 15px;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .section-subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--color-accent);
+        }
+        .lead-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+        .body-text {
+            font-size: 1.1rem;
+        }
+        .small-text {
+            font-size: 0.9rem;
+        }
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin-top: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--color-accent);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+        }
+        .timeline-year {
+            position: absolute;
+            left: -50px;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 0 0 5px var(--color-dark);
+        }
+        .timeline-content {
+            background: var(--color-gray);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .timeline-content h4 {
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        /* Gallery */
+        .gallery-img {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .gallery-img img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Biografía image */
+        .bio-image {
+            max-width: 80%;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        /* Contexto histórico */
+        .context-box {
+            background-color: rgba(139, 0, 0, 0.1);
+            border-left: 4px solid var(--color-accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        /* Estilo para el enlace activo en la barra de navegación */
+        .navbar-nav .nav-link.active {
+            color: var(--color-accent) !important;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cross me-2"></i>Desmond Doss
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#biografia">Biografía</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cronologia">Cronología</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galeria">Galería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hazañas">Hazañas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reconocimientos">Reconocimientos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section Mejorado -->
+    <header id="inicio" class="hero-section text-white">
+        <div class="container hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="display-3 fw-bold mb-4">DESMOND T. DOSS</h1>
+            <p class="lead fs-3">El primer objetor de conciencia en recibir la <strong>Medalla de Honor</strong></p>
+            
+            <div class="hero-quote" data-aos="fade-right" data-aos-delay="500">
+                "Mientras haya vida, hay esperanza"
+            </div>
+            
+            <div class="d-flex gap-3">
+                <a href="#biografia" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="700">
+                    Conoce su historia <i class="fas fa-arrow-down ms-2"></i>
+                </a>
+                <a href="#cronologia" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="900">
+                    Cronología <i class="fas fa-history ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Biografía -->
+    <section id="biografia" class="container my-5 py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title mb-4">Biografía</h2>
+                <p class="body-text"><strong>Desmond Thomas Doss</strong> (1919-2006) fue un médico militar estadounidense y adventista del séptimo día que se hizo famoso por salvar a 75 soldados en Okinawa <strong>sin portar armas</strong>, convirtiéndose en el primer objetor de conciencia en recibir la Medalla de Honor.</p>
+                
+                <p class="body-text">Nacido en Virginia en una familia adventista, desde niño adoptó un pacifismo radical. Un episodio traumático con su padre, veterano de la Primera Guerra Mundial, reforzó su convicción de que <em>"la violencia nunca era la respuesta"</em>.</p>
+                
+                <p class="body-text">En 1942 se alistó como médico militar pero se negó a portar armas, enfrentando burlas y persecución. Durante la <strong>Batalla de Okinawa (1945)</strong>, en Hacksaw Ridge, rescató a 75 compañeros bajo fuego enemigo usando un sistema de cuerdas improvisado, repitiendo su plegaria: <em>"Dios, ayúdame a salvar a uno más"</em>.</p>
+                
+                <div class="context-box" data-aos="fade-up">
+                    <h4 class="section-subtitle">Contexto: La Batalla de Okinawa</h4>
+                    <p class="body-text">La Batalla de Okinawa (abril-junio 1945) fue una de las más sangrientas del Pacífico en la Segunda Guerra Mundial. Conocida como la "tormenta de acero", enfrentó a 180,000 soldados estadounidenses contra 130,000 japoneses. Los combates en Hacksaw Ridge (Maeda Escarpment) fueron particularmente brutales, con los japoneses defendiendo desde una red de cuevas y fortificaciones. En este infierno, Desmond Doss realizó sus heroicas acciones.</p>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="imagenes/Desmond.jpg" alt="Desmond Doss en uniforme militar durante la Segunda Guerra Mundial" class="bio-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Cronología -->
+    <section id="cronologia" class="container my-5 py-5 bg-dark rounded">
+        <h2 class="section-title text-center mb-5" data-aos="fade-down">Cronología de su Vida</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-year">1919</div>
+                <div class="timeline-content">
+                    <h4>Nacimiento</h4>
+                    <p class="body-text">Nace el 7 de febrero en Lynchburg, Virginia, hijo de William Thomas Doss y Bertha E. Oliver.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-year">1939</div>
+                <div class="timeline-content">
+                    <h4>Trabajo en astillero</h4>
+                    <p class="body-text">Trabaja en el astillero naval de Newport News mientras asiste a la Iglesia Adventista del Séptimo Día.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-year">1942</div>
+                <div class="timeline-content">
+                    <h4>Servicio militar</h4>
+                    <p class="body-text">Se alista como objetor de conciencia, rechazando portar armas pero sirviendo como médico de combate.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-year">1945</div>
+                <div class="timeline-content">
+                    <h4>Hacksaw Ridge</h4>
+                    <p class="body-text">El 2 de mayo rescata a 75 soldados heridos durante la Batalla de Okinawa, ganándose el respeto de sus compañeros.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-right">
+                <div class="timeline-year">1945</div>
+                <div class="timeline-content">
+                    <h4>Medalla de Honor</h4>
+                    <p class="body-text">El 12 de octubre recibe la Medalla de Honor de manos del presidente Harry S. Truman.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-aos="fade-left">
+                <div class="timeline-year">2006</div>
+                <div class="timeline-content">
+                    <h4>Fallecimiento</h4>
+                    <p class="body-text">Muere el 23 de marzo a los 87 años en Piedmont, Alabama, siendo enterrado con honores militares.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería -->
+    <section id="galeria" class="container my-5 py-5">
+        <h2 class="section-title mb-5 text-center" data-aos="fade-down">Galería de Imágenes</h2>
+        
+        <div class="row">
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                <div class="gallery-img">
+                    <img src="imagenes/desmoundretrato.jpg" alt="Retrato oficial de Desmond Doss en uniforme militar">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Retrato oficial de Desmond Doss</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                <div class="gallery-img">
+                    <img src="imagenes/recibiendomedalla.jpg" alt="Desmond Doss recibiendo la Medalla de Honor del presidente Truman">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Recibiendo la Medalla de Honor</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                <div class="gallery-img">
+                    <img src="imagenes/sirviendo.jpg" alt="Desmond Doss atendiendo a un soldado herido en el campo de batalla">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Sirviendo como médico de combate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                <div class="gallery-img">
+                    <img src="imagenes/juventud.jpg" alt="Desmond Doss en su juventud antes de la guerra">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Desmond Doss en su juventud</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                <div class="gallery-img">
+                    <img src="imagenes/batalla.jpg" alt="Campo de batalla en Okinawa donde Desmond Doss realizó sus heroicas acciones">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Campo de batalla de Okinawa</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                <div class="gallery-img">
+                    <img src="imagenes/vejes" alt="Desmond Doss en sus últimos años, sonriendo con su característica humildad">
+                    <div class="p-3 bg-gray">
+                        <p class="mb-0 small-text">Desmond Doss en sus últimos años</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hazañas -->
+    <section id="hazañas" class="container mb-5 py-5 bg-dark rounded">
+        <h2 class="section-title text-center mb-5 text-white" data-aos="fade-down">Sus Hazañas en Okinawa</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100">
+                    <div class="card-body text-center text-white">
+                        <i class="fas fa-medal fa-3x mb-3" style="color: var(--color-accent);"></i>
+                        <h4 class="section-subtitle">Rescate en Hacksaw Ridge</h4>
+                        <p class="body-text">El 2 de mayo de 1945, bajo fuego japonés, bajó a 75 soldados heridos desde un acantilado de 120 metros usando un sistema de cuerdas improvisado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100">
+                    <div class="card-body text-center text-white">
+                        <i class="fas fa-pray fa-3x mb-3" style="color: var(--color-accent);"></i>
+                        <h4 class="section-subtitle">Fe Inquebrantable</h4>
+                        <p class="body-text">Fue el único médico en permanecer en la cima cuando su unidad se retiró, protegiendo a los heridos con su propio cuerpo en múltiples ocasiones.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100">
+                    <div class="card-body text-center text-white">
+                        <i class="fas fa-hand-holding-heart fa-3x mb-3" style="color: var(--color-accent);"></i>
+                        <h4 class="section-subtitle">Herido en Acción</h4>
+                        <p class="body-text">En 1945, una granada le destrozó la pierna, pero protegió a otro soldado con su cuerpo. Siguió atendiendo heridos hasta ser evacuado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card h-100">
+                    <div class="card-body text-center text-white">
+                        <i class="fas fa-clock fa-3x mb-3" style="color: var(--color-accent);"></i>
+                        <h4 class="section-subtitle">12 Horas de Rescate</h4>
+                        <p class="body-text">Trabajó sin descanso durante 12 horas continuas bajo fuego enemigo, cargando soldados más pesados que él.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reconocimientos -->
+    <section id="reconocimientos" class="container mb-5 py-5">
+        <h2 class="section-title mb-4 text-white" data-aos="fade-down">Reconocimientos</h2>
+        <div class="row">
+            <div class="col-md-6" data-aos="fade-right">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-medal me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Medalla de Honor (1945)</strong> - Entregada personalmente por el presidente Harry S. Truman
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-star me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Corazón Púrpura</strong> - Por las heridas recibidas en combate
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-award me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Estrella de Bronce</strong> - Por su valor excepcional
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-ribbon me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Salón de la Fama Militar</strong> - Incluido póstumamente en 2008
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-film me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Legado Cinematográfico</strong> - Película "Hasta el Último Hombre" (2016)
+                    </li>
+                    <li class="list-group-item bg-transparent text-white border-secondary">
+                        <i class="fas fa-hospital me-2" style="color: var(--color-accent);"></i>
+                        <strong class="lead-text">Hospital Memorial</strong> - Lleva su nombre en Chattanooga
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-4" data-aos="zoom-in">
+            <img src="imagenes/medalla.jpg" alt="Medalla de Honor otorgada a Desmond Doss" class="img-fluid rounded w-50 shadow">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-white py-4">
+        <div class="container text-center">
+            <h3 class="mb-3">"Dios, ayúdame a salvar a uno más"</h3>
+            <p class="body-text">© 2023 - Blog en memoria de Desmond Doss <i class="fas fa-heart text-danger ms-1"></i></p>
+            <div class="social-icons mt-3">
+                <a href="#" class="text-white mx-2" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-white mx-2" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-white mx-2" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Back to top button
+        window.addEventListener('scroll', function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Actualizar el enlace activo en la barra de navegación
+                document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Actualizar el enlace activo al hacer scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
